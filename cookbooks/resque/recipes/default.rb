@@ -37,7 +37,7 @@ if ['solo', 'util'].include?(node[:instance_role])
       # Added name "resque_download" manually in /etc/chef/dna.json
       # 
       # 
-      if node[:name] == "resque_download"
+      if node[:instance_role] == "solo"
          worker_count.times do |count|
             template "/data/#{app}/shared/config/resque_#{count}.conf" do
                owner node[:owner_name]
