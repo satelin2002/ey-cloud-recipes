@@ -12,7 +12,7 @@ if ['solo', 'util'].include?(node[:instance_role])
    case node[:ec2][:instance_type]
    when 'm1.small': worker_count = 1
    when 'c1.medium': worker_count =  2
-   when 'c1.xlarge': worker_count = 2
+   when 'c1.xlarge': worker_count = 4
    else
       worker_count = 2
    end
@@ -63,11 +63,21 @@ if ['solo', 'util'].include?(node[:instance_role])
       # QUEUE = demuxer on resque_demux
       if node[:name] == "resque_demux"
          worker_count.times do |count|
+            case count 
+            when 2
+              config_file = "resque_wildcard_demux.conf.erb"
+            when 3
+              config_file = "resque_wildcard_transcode.conf.erb"
+            else
+              config_file = "resque_wildcard_download.conf.erb"
+            end    
+            
+           
             template "/data/#{app}/shared/config/resque_#{count}.conf" do
                owner node[:owner_name]
                group node[:owner_name]
                mode 0644
-               source "resque_wildcard_demux.conf.erb"
+               source config_file
             end
          end
       end
