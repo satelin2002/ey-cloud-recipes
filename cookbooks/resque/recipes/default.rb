@@ -14,7 +14,7 @@ if ['solo', 'util'].include?(node[:instance_role])
    when 'c1.medium': worker_count =  1
    when 'c1.xlarge': worker_count = 1
    else
-      worker_count = 1
+      worker_count = 3
    end
 
 
@@ -32,30 +32,13 @@ if ['solo', 'util'].include?(node[:instance_role])
       end
       
       
-      ### START 
-      ## Insert a downloader QUEUE for the application instance.
-      # Added name "resque_download" manually in /etc/chef/dna.json
-      # 
-      # 
-      if node[:instance_role] == "solo"
-         worker_count.times do |count|
-            template "/data/#{app}/shared/config/resque_#{count}.conf" do
-               owner node[:owner_name]
-               group node[:owner_name]
-               mode 0644
-               source "resque_wildcard_download.conf.erb"
-            end
-         end
-      end
-     
-      
       # QUEUE = demuxer on resque_demux
       if node[:name] == "resque_demux"
          worker_count.times do |count|
             case count 
-            when 2
+            when 1
               config_file = "resque_wildcard_demux.conf.erb"
-            when 3
+            when 2
               config_file = "resque_wildcard_transcode.conf.erb"
             else
               config_file = "resque_wildcard_download.conf.erb"
