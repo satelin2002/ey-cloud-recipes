@@ -10,11 +10,11 @@ if ['solo', 'util'].include?(node[:instance_role])
    end
 
    case node[:ec2][:instance_type]
-   when 'm1.small': worker_count = 1
-   when 'c1.medium': worker_count =  2
-   when 'c1.xlarge': worker_count = 4
+   when 'm1.small': worker_count = 0
+   when 'c1.medium': worker_count =  1
+   when 'c1.xlarge': worker_count = 1
    else
-      worker_count = 4
+      worker_count = 1
    end
 
 
@@ -47,18 +47,7 @@ if ['solo', 'util'].include?(node[:instance_role])
             end
          end
       end
-      
-      # QUEUE = transcoder on resque_transcode
-      if node[:name] == "resque_transcode"
-         worker_count.times do |count|
-            template "/data/#{app}/shared/config/resque_#{count}.conf" do
-               owner node[:owner_name]
-               group node[:owner_name]
-               mode 0644
-               source "resque_wildcard_transcode.conf.erb"
-            end
-         end
-      end
+     
       
       # QUEUE = demuxer on resque_demux
       if node[:name] == "resque_demux"
