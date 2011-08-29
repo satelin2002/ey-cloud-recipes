@@ -17,7 +17,6 @@ if ['solo', 'util'].include?(node[:instance_role])
       worker_count = 3
    end
 
-
    node[:applications].each do |app, data|
       template "/etc/monit.d/resque_#{app}.monitrc" do
          owner 'root'
@@ -31,9 +30,8 @@ if ['solo', 'util'].include?(node[:instance_role])
          })
       end
       
-      
       # QUEUE = demuxer on resque_demux
-      if node[:name] == "resque_demux"
+      if node[:name] == "resque"
          worker_count.times do |count|
             case count 
             when 1
@@ -42,9 +40,10 @@ if ['solo', 'util'].include?(node[:instance_role])
               config_file = "resque_wildcard_transcode.conf.erb"
             else
               config_file = "resque_wildcard_download.conf.erb"
+            else
+              config_file = "resque_wildcard_youtube.conf.erb"
             end    
             
-           
             template "/data/#{app}/shared/config/resque_#{count}.conf" do
                owner node[:owner_name]
                group node[:owner_name]
