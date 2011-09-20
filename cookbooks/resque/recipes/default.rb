@@ -40,8 +40,6 @@ if ['solo', 'util'].include?(node[:instance_role])
               config_file = "resque_wildcard_transcode.conf.erb"
             else
               config_file = "resque_wildcard_download.conf.erb"
-            else
-              config_file = "resque_wildcard_youtube.conf.erb"
             end    
             
             template "/data/#{app}/shared/config/resque_#{count}.conf" do
