@@ -34,21 +34,62 @@ if ['solo', 'util'].include?(node[:instance_role])
       # QUEUE = demuxer on resque_demux
       if node[:instance_role] == "solo"
          
-         # Queue for the frontier
-         (1..4).each do |count|
-            config_file = "resque_wildcard_frontier.conf.erb"
-            
-            template "/data/#{app}/shared/config/resque_#{count}.conf" do
-               owner node[:owner_name]
-               group node[:owner_name]
-               mode 0644
-               source config_file
-            end
-         end
+          count = 1
+          config_file = "resque_wildcard_frontier_A.conf.erb"
+
+          template "/data/#{app}/shared/config/resque_#{count}.conf" do
+            owner node[:owner_name]
+            group node[:owner_name]
+            mode 0644
+            source config_file
+          end
+          
+          count = 2
+          config_file = "resque_wildcard_frontier_B.conf.erb"
+
+          template "/data/#{app}/shared/config/resque_#{count}.conf" do
+            owner node[:owner_name]
+            group node[:owner_name]
+            mode 0644
+            source config_file
+          end
+          
+          count = 3
+          config_file = "resque_wildcard_frontier_C.conf.erb"
+
+          template "/data/#{app}/shared/config/resque_#{count}.conf" do
+            owner node[:owner_name]
+            group node[:owner_name]
+            mode 0644
+            source config_file
+          end
+          
+          count = 4
+          config_file = "resque_wildcard_frontier_D.conf.erb"
+
+          template "/data/#{app}/shared/config/resque_#{count}.conf" do
+            owner node[:owner_name]
+            group node[:owner_name]
+            mode 0644
+            source config_file
+          end
+          
+          
+          count = 5
+          config_file = "resque_wildcard_frontier_E.conf.erb"
+
+          template "/data/#{app}/shared/config/resque_#{count}.conf" do
+            owner node[:owner_name]
+            group node[:owner_name]
+            mode 0644
+            source config_file
+          end
+          
+         
          
          
           # Queue for the demuxer
-          (5..8).each do |count|
+          (6..8).each do |count|
              config_file = "resque_wildcard_demux.conf.erb"
 
              template "/data/#{app}/shared/config/resque_#{count}.conf" do
