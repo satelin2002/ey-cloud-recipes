@@ -31,16 +31,11 @@ if ['solo', 'util'].include?(node[:instance_role])
       end
       
       # QUEUE = demuxer on resque_demux
-      if node[:name] == "resque"
-         worker_count.times do |count|
-            case count 
-            when 1
-              config_file = "resque_wildcard_demux.conf.erb"
-            when 2
-              config_file = "resque_wildcard_transcode.conf.erb"
-            else
-              config_file = "resque_wildcard_download.conf.erb"
-            end    
+      if node[:instance_role] == "solo"
+         
+         # Queue for the frontier
+         4.times do |count|
+            config_file = "resque_wildcard_frontier.conf.erb"
             
             template "/data/#{app}/shared/config/resque_#{count}.conf" do
                owner node[:owner_name]
@@ -49,6 +44,7 @@ if ['solo', 'util'].include?(node[:instance_role])
                source config_file
             end
          end
+         
       end
       
       ### END

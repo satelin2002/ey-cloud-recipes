@@ -3,7 +3,7 @@
 # Recipe:: default
 #
 
-if ['util'].include?(node[:instance_role])
+if ['solo'].include?(node[:instance_role])
 
 execute "set_overcommit_memory" do
   command "echo 1 > /proc/sys/vm/overcommit_memory"
