@@ -14,7 +14,7 @@ if ['solo', 'util'].include?(node[:instance_role])
    when 'c1.medium': worker_count =  1
    when 'c1.xlarge': worker_count = 1
    else
-      worker_count = 12
+      worker_count = 13
    end
 
    node[:applications].each do |app, data|
