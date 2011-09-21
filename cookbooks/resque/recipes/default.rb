@@ -14,10 +14,11 @@ if ['solo', 'util'].include?(node[:instance_role])
    when 'c1.medium': worker_count =  1
    when 'c1.xlarge': worker_count = 1
    else
-      worker_count = 3
+      worker_count = 12
    end
 
    node[:applications].each do |app, data|
+    
       template "/etc/monit.d/resque_#{app}.monitrc" do
          owner 'root'
          group 'root'
