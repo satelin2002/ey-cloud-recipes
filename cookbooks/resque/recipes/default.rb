@@ -47,7 +47,7 @@ if ['solo', 'util'].include?(node[:instance_role])
          
          
           # Queue for the demuxer
-          (5..8).times do |count|
+          (5..8).each do |count|
              config_file = "resque_wildcard_demux.conf.erb"
 
              template "/data/#{app}/shared/config/resque_#{count}.conf" do
@@ -60,7 +60,7 @@ if ['solo', 'util'].include?(node[:instance_role])
           
           
           # Queue for the transcoder
-           (9..12).times do |count|
+           (9..12).each do |count|
                config_file = "resque_wildcard_transcode.conf.erb"
 
                template "/data/#{app}/shared/config/resque_#{count}.conf" do
